@@ -25,6 +25,7 @@ services:
       MYSQL_PASSWORD: moses1234
     volumes:
       - db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db-data:
