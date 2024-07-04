@@ -16,7 +16,7 @@ services:
 
   db:
     build:
-      context: ./nginx/dockerfile.mysql
+      context: ./mysql
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: moses1234
