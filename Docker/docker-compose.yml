@@ -13,6 +13,8 @@ services:
       - ./nginx/booking.html:/usr/share/nginx/html/booking.html
     depends_on:
       - db
+    networks:
+      - app-network
 
   db:
     build:
@@ -23,9 +25,17 @@ services:
       MYSQL_DATABASE: inventory_db
       MYSQL_USER: mosesugwu
       MYSQL_PASSWORD: moses1234
+
+    networks:
+      - app-network
+
     volumes:
       - db-data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db-data:
+
+networks:
+  app-network:
+    driver: bridge
