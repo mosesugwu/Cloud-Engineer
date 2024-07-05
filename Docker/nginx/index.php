@@ -61,51 +61,51 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Inventory Registration</h1>
+        <form action="index.php" method="post">
+            <label for="item-name">Item Name:</label>
+            <input type="text" id="item-name" name="item-name" required>
 
-<div class="container">
-    <h1>Inventory Registration</h1>
-    <form method="POST">
-        <label for="item-name">Item Name:</label>
-        <input type="text" id="item-name" name="item-name" required>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
 
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
 
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" required>
+            <input type="submit" value="Register Item">
+        </form>
+    </div>
 
-        <input type="submit" value="Register Item">
-    </form>
-</div>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $servername = "mysql-db";
+        $username = "mosesugwu";
+        $password = "moses1234";
+        $dbname = "inventory_db";
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $servername = "db";
-    $username = "root";
-    $password = "moses1234;
-    $dbname = "inventory_db";
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        $itemName = $_POST['item-name'];
+        $quantity = $_POST['quantity'];
+        $price = $_POST['price'];
+
+        $sql = "INSERT INTO inventory (item_name, quantity, price) VALUES ('$itemName', '$quantity', '$price')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Item registered successfully!";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
     }
-
-    $item_name = $_POST["item-name"];
-    $quantity = $_POST["quantity"];
-    $price = $_POST["price"];
-
-    $sql = "INSERT INTO inventory (item_name, quantity, price) VALUES ('$item_name', $quantity, $price)";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
-}
-?>
-
+    ?>
 </body>
 </html>
