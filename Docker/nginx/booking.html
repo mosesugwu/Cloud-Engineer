@@ -61,10 +61,9 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>Inventory Registration</h1>
-        <form>
+        <form action="index.php" method="post">
             <label for="item-name">Item Name:</label>
             <input type="text" id="item-name" name="item-name" required>
 
@@ -78,5 +77,35 @@
         </form>
     </div>
 
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $servername = "mysql-db";
+        $username = "mosesugwu";
+        $password = "moses1234";
+        $dbname = "inventory_db";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $itemName = $_POST['item-name'];
+        $quantity = $_POST['quantity'];
+        $price = $_POST['price'];
+
+        $sql = "INSERT INTO inventory (item_name, quantity, price) VALUES ('$itemName', '$quantity', '$price')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Item registered successfully!";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
+    }
+    ?>
 </body>
 </html>
