@@ -13,31 +13,36 @@ services:
       - ./nginx/index.php:/usr/share/nginx/html/index.php
     depends_on:
       - db
+      - php-fpm
     networks:
       - app-network
 
   db:
-    build:
-      context: ./mysql
+    image: mysql:8.0
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: moses1234
       MYSQL_DATABASE: inventory_db
       MYSQL_USER: mosesugwu
       MYSQL_PASSWORD: moses1234
-
-    networks:
-      - app-network
-
     volumes:
       - db-data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
 
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
+  php-fpm:
+    image: php:7.4-fpm
+    container_name: php-fpm
+    volumes:
+      - ./nginx/index.php:/usr/share/nginx/html/index.php
+    networks:
+      - app-network
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  db-data:
+
