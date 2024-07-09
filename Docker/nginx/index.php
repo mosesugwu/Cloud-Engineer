@@ -79,7 +79,7 @@
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $servername = "mysql-db";
+        $servername = "db";
         $username = "mosesugwu";
         $password = "moses1234";
         $dbname = "inventory_db";
