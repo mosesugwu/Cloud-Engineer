@@ -8,7 +8,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\",\"mosesdev\":\"Tech\"},\"moses\":\"MOSESDEV\"}]}" >> $GITHUB_OUTPUT
+          echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"},{\"moses\":\"Mosesdev\",\"learn\":\"Tech\"}]}" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT 
   job2:
     needs: job1
@@ -18,5 +18,5 @@ jobs:
     steps:
       - run: |
           echo "Matrix - Project ${{ matrix.project }}, Config ${{ matrix.config }}"
-          echo "This project belongs to ${{ matrix.mosesdev }}, for all Config ${{ matrix.config }} educational learning"
+          echo "This project belongs to ${{ matrix.moses }}, for all ${{ matrix.learn }} educational learning"
 
