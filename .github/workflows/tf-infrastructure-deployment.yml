@@ -35,5 +35,7 @@ jobs:
               run: cd ${{env.workdir}} && terraform validate
 
             - name: Terraform plan
-              run: cd ${{env.workdir}} && terraform plan   
+              run: cd ${{env.workdir}} && terraform plan 
+              
+              
 
