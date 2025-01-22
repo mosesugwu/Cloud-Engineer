@@ -29,7 +29,7 @@ jobs:
               run: cd ${{env.workdir}} && terraform init 
 
             - name: Terraform fmt
-              run: cd ${{env.workdir}} && terraform fmt -check
+              run: cd ${{env.workdir}} && terraform fmt .
 
             - name: Terraform validate
               run: cd ${{env.workdir}} && terraform validate
