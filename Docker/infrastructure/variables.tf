@@ -38,3 +38,8 @@ variable "nsg_name" {
 #   default     = {}
 
 # }
+
+variable "public_key" {
+  type = string
+  
+}

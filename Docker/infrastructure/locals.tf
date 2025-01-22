@@ -2,7 +2,7 @@ locals {
   virtual_machines = {
     vm-1 = {
       name           = data.azurecaf_name.vm_1.result
-      public_key     = file("moseskey.pub")
+      public_key     = var.public_key 
       admin_username = "mosesugwu"
       username       = "mosesugwu"
       size           = "Standard_F2"
