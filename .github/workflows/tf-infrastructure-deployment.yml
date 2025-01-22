@@ -7,6 +7,7 @@ on:
             # - main
         paths:
             - "Docker/infrastructure/**"
+            - ".github/workflows/tf-infrastructure-deployment.yml"
 env:
     terraform-version: "1.1.7"
 
@@ -23,15 +24,18 @@ jobs:
               with:
                 terraform_version: ${{ env.terraform-version}} 
 
-            - name: Terraform init
-              run: terraform init 
+            - name: list
+              run: ls -l
 
-            - name: Terraform fmt
-              run: terraform fmt -check
+            # - name: Terraform init
+            #   run: terraform init 
 
-            - name: Terraform validate
-              run: terraform validate
+            # - name: Terraform fmt
+            #   run: terraform fmt -check
 
-            - name: Terraform plan
-              run: terraform plan
+            # - name: Terraform validate
+            #   run: terraform validate
+
+            # - name: Terraform plan
+            #   run: terraform plan
 
