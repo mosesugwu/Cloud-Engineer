@@ -38,8 +38,10 @@ jobs:
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
 
-            # - name: Terraform plan
-            #   run: cd ${{env.workdir}} && terraform plan
+            - name: Terraform plan
+              run: cd ${{env.workdir}} && terraform plan
+              env:
+                TF_VAR_public_key: "${{ secrets.public_key }}" 
             
             
               
