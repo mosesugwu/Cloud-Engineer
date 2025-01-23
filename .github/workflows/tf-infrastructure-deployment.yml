@@ -12,7 +12,7 @@ env:
     terraform-version: "1.1.7"
     workdir: "Docker/infrastructure/" 
     TF_VAR_public_key: "${{ secrets.public_key }}" 
-    client_secret: "${{ secrets.client_secret }}"
+    TF_VAR_client_secret: "${{ secrets.client_secret }}"
 
 
 jobs:
@@ -38,13 +38,13 @@ jobs:
               run: cd ${{env.workdir}} && terraform validate
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}"
-                client_secret: "${{ secrets.client_secret }}" 
+                TF_VAR_client_secret: "${{ secrets.client_secret }}" 
 
             - name: Terraform plan
               run: cd ${{env.workdir}} && terraform plan
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
-                client_secret: "${{ secrets.client_secret }}"
+                TF_VAR_client_secret: "${{ secrets.client_secret }}"
             
             
               
