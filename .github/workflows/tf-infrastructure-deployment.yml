@@ -13,6 +13,8 @@ env:
     workdir: "Docker/infrastructure/" 
     TF_VAR_public_key: "${{ secrets.public_key }}" 
     TF_VAR_client_secret: "${{ secrets.client_secret }}"
+    ARM_CLIENT_ID: 49d663e0-c997-439d-b75f-bac184c474d8
+    ARM_TENANT_ID: 062b4bc0-fa03-4ff6-898f-318d88f23127
 
 
 jobs:
@@ -26,7 +28,15 @@ jobs:
             - name: Terraform install version
               uses: hashicorp/setup-terraform@v3
               with:
-                terraform_version: ${{ env.terraform-version}} 
+                terraform_version: ${{ env.terraform-version}}
+                
+            # - name: Install Azure CLI 
+            #   run: |
+            #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+            # - name: Azure CLI login
+            #   run: az login --service-principal -u "${{ env.AZURE_CLIENT_ID }}" -p"${{ env.TF_VAR_client_secret }}" --tenant  "${{ env.AZURE_TENANT_ID }}"
+
 
             - name: Terraform init
               run: cd ${{env.workdir}} && terraform init 
