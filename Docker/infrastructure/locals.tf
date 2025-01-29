@@ -8,7 +8,7 @@ locals {
       size           = "Standard_F2"
     },
     vm-2 = {
-      name           = ghrunner1
+      name           = "ghrunner1"
       size           = "Standard_F2"
       public_key     = file("moseskey.pub")
       admin_username = "mosesugwu"
@@ -30,7 +30,7 @@ locals {
 
     },
     vm-2 = {
-      name                 = data.azurecaf_name.nic_2.result
+      name                 = ghrunner1
       public_ip_address_id = azurerm_public_ip.vm_2.id
 
     },
