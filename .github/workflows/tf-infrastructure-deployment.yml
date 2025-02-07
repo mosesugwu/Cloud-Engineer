@@ -30,12 +30,12 @@ jobs:
               with:
                 terraform_version: ${{ env.terraform-version}}
                 
-            # - name: Install Azure CLI 
-            #   run: |
-            #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            - name: Install Azure CLI 
+              run: |
+                curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-            # - name: Azure CLI login
-            #   run: az login --service-principal -u "${{ env.AZURE_CLIENT_ID }}" -p"${{ env.TF_VAR_client_secret }}" --tenant  "${{ env.AZURE_TENANT_ID }}"
+            - name: Azure CLI login
+              run: az login --service-principal -u "${{ env.AZURE_CLIENT_ID }}" -p"${{ env.TF_VAR_client_secret }}" --tenant  "${{ env.AZURE_TENANT_ID }}"
 
 
             - name: Terraform init
