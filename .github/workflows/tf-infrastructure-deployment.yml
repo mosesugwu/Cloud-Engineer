@@ -37,7 +37,7 @@ jobs:
                 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
             - name: Azure CLI login
-              run: az login --service-principal --username "${{ env.AZURE_CLIENT_ID }}" --password "${{ env.TF_VAR_client_secret }}" --tenant "${{ env.AZURE_TENANT_ID }}"
+              run: az login --service-principal --username "${{ env.ARM_CLIENT_ID }}" --password "${{ env.ARM_CLIENT_SECRET }}" --tenant "${{ env.ARM_TENANT_ID }}"
 
 
             - name: Terraform init
