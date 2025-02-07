@@ -36,6 +36,6 @@ terraform.rc
 # SSH Keys
 # .*pub*
 moseskey
-moseskey.pub
+# moseskey.pub
 # moluskatopnotch.link_cert/
 moluskatopnotch.link_key/
