@@ -8,7 +8,7 @@ locals {
       size           = "Standard_F2"
     },
     vm-2 = {
-      name           = ghrunner1
+      name           = "ghrunner1"
       size           = "Standard_F2"
       public_key     = file("moseskey.pub")
       admin_username = "mosesugwu"
