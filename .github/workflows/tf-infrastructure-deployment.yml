@@ -42,7 +42,7 @@ jobs:
 
 
             - name: Terraform init
-              run: cd ${{env.workdir}} && terraform init
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform init
               env:
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}" 
                 ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
@@ -50,7 +50,7 @@ jobs:
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
             - name: Terraform fmt
-              run: cd ${{env.workdir}} && terraform fmt .
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform fmt .
               env:
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
                 ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
@@ -58,7 +58,7 @@ jobs:
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
             - name: Terraform validate
-              run: cd ${{env.workdir}} && terraform validate
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform validate
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}"
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
@@ -67,7 +67,7 @@ jobs:
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
             - name: Terraform plan
-              run: cd ${{env.workdir}} && terraform plan
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform plan
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
@@ -76,7 +76,7 @@ jobs:
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
             - name: Terraform apply 
-              run: cd ${{env.workdir}} && terraform apply -auto-approve
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
               env:
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
