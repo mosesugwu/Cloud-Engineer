@@ -21,7 +21,8 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on: ubuntu-latest
+        runs-on:
+          self-hosted: ghrunner1 
 
         steps:
             - name: Git checkout
@@ -86,7 +87,7 @@ jobs:
 
 
 
-                
+
 
 
 
