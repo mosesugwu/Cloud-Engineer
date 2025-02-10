@@ -41,5 +41,5 @@ variable "nsg_name" {
 
 variable "public_key" {
   type = string
-  
+
 }

@@ -2,7 +2,7 @@ locals {
   virtual_machines = {
     vm-1 = {
       name           = data.azurecaf_name.vm_1.result
-      public_key     = var.public_key 
+      public_key     = var.public_key
       admin_username = "mosesugwu"
       username       = "mosesugwu"
       size           = "Standard_F2"
@@ -20,13 +20,13 @@ locals {
     #   public_key     = file("moseskey.pub")
     #   admin_username = "mosesugwu"
     #   username       = "mosesugwu"
-      
+
     # }
   }
   network_interface_ids = {
     vm-1 = {
       name                 = data.azurecaf_name.nic_1.result
-      public_ip_address_id = module.virtual_network.pip_id 
+      public_ip_address_id = module.virtual_network.pip_id
 
     },
     vm-2 = {
