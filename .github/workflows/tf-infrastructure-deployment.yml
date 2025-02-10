@@ -21,7 +21,7 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on: [self-hosted, linux, x64, ghrunner1] 
+        runs-on: [self-hosted, linux, x64] 
            
 
         steps:
