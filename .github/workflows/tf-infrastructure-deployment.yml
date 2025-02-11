@@ -34,7 +34,7 @@ jobs:
                 node-version: '20'
 
             - name: Copy private key to runner
-              run: echo "${{ secrets.private_key }}" > $HOME/.ssh
+              run: echo "${{ secrets.private_key }}" > $HOME/.ssh/moseskey
               shell: bash
 
             - name: Terraform install version
