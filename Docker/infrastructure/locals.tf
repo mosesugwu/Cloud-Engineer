@@ -10,7 +10,7 @@ locals {
       vars           = {}
     },
     vm-2 = {
-      name           = "ghrunner1"
+      name           = "ghrunner-vm02"
       size           = "Standard_F2"
       public_key     = file("moseskey.pub")
       admin_username = "mosesugwu"
@@ -23,7 +23,7 @@ locals {
       }
     },
     vm-3 = {
-      name           = "hashicorpvault-vm01"
+      name           = "hashicorpvault-vm03"
       size           = "Standard_F2"
       public_key     = file("moseskey.pub")
       admin_username = "mosesugwu"

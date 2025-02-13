@@ -14,6 +14,9 @@ echo "RUNNER_URL: ${RUNNER_URL}"
 echo "RUNNER_SHA: ${RUNNER_SHA}"
 echo "RUNNER_TAR: ${RUNNER_TAR}"
 
+#Debug: Print current directory
+echo "Current directory: $(pwd)"
+
 # Create a folder
 mkdir actions-runner
 cd actions-runner
