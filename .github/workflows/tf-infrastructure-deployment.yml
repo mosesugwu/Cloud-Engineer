@@ -25,7 +25,7 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on:  [self-hosted, linux, x64] 
+        runs-on: ubuntu-latest #[self-hosted, linux, x64] 
            
 
         steps:
