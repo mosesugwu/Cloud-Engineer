@@ -18,6 +18,9 @@ env:
     ARM_CLIENT_ID: 49d663e0-c997-439d-b75f-bac184c474d8
     ARM_TENANT_ID: 062b4bc0-fa03-4ff6-898f-318d88f23127
     ARM_SUBSCRIPTION_ID: 3e58bbdc-9887-4d0f-af48-e47b110f81a5
+    TF_VAR_custom_data_vm_1: "${{ github.workspace }}/Docker/infrastructure/scripts/docker_install.sh"
+    TF_VAR_custom_data_vm_3: "${{ github.workspace }}/Docker/infrastructure/scripts/vault_install.sh"
+    TF_VAR_custom_data_vm_2: "${{ github.workspace }}/Docker/infrastructure/scripts/ghrunner_install.sh"
 
 
 jobs:

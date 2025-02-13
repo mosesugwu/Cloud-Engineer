@@ -34,7 +34,7 @@ override.tf.json
 terraform.rc
 
 # SSH Keys
-# .*pub*
+*pub*
 moseskey
 # moseskey.pub
 # moluskatopnotch.link_cert/
