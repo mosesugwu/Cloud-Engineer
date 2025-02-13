@@ -63,3 +63,6 @@ locals {
   disk_name        = "hashidisk"
 }
 
+
+
+
