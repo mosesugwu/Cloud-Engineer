@@ -3,7 +3,7 @@ exec > >(sudo tee -a /var/log/vault_install.log) 2>&1
 set -x
 
 VAULT_DIR="vault/data"
-USER="tsrlearning"
+USER="mosesugwu"
 
 wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
@@ -50,9 +50,9 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 EOF
 
-sudo chown $USER:$USER /home/tsrlearning/config.hcl
+sudo chown $USER:$USER /home/mosesugwu/config.hcl
 sudo chown $USER:$USER /etc/systemd/system/vault.service
-sudo chmod 644 /home/tsrlearning/config.hcl
+sudo chmod 644 /home/mosesugwu/config.hcl
 sudo chmod 644 /etc/systemd/system/vault.service
 
 sudo systemctl daemon-reload

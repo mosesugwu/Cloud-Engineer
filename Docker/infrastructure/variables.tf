@@ -63,7 +63,7 @@ variable "custom_data_vm_3" {
   type        = string
 }
 
-# variable "TOKEN" {
-#   type        = string
-#   description = "The GITHUB Pat access token"
-# }
+variable "TOKEN" {
+  type        = string
+  description = "The GITHUB Pat access token"
+}
