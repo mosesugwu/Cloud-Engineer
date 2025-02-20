@@ -101,3 +101,5 @@ resource "azurerm_public_ip" "vm_3" {
   allocation_method   = "Static"
 
 }
+
+
