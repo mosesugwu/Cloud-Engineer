@@ -91,6 +91,13 @@ jobs:
                 ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
+
+            - name: Debug TOKEN
+              run: echo "TOKEN is set"
+              env:
+                TOKEN: ${{ secrets.TOKEN }}
+  
+
             - name: Terraform plan
               run: cd ${{ github.workspace }}/${{env.workdir}} && terraform plan
               env:
@@ -117,7 +124,7 @@ jobs:
                 az network nsg rule delete --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} --name AllowGitHubActionsRunner
 
 
-                
+
 
 
 
