@@ -65,5 +65,5 @@ variable "custom_data_vm_3" {
 
 variable "TOKEN" {
   type        = string
-  description = "The GITHUB Pat access token"
+  description = "GitHub Personal Access Token"
 }

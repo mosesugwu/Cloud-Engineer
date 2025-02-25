@@ -11,6 +11,7 @@ on:
 env:
     terraform-version: "1.1.7"
     workdir: "Docker/infrastructure/" 
+    TF_VAR_TOKEN: ${{ secrets.TOKEN }}
     TF_VAR_private_key: ${{ secrets.private_key }}
     TF_VAR_public_key: "${{ secrets.public_key }}" 
     TF_VAR_client_secret: "${{ secrets.client_secret }}"
@@ -101,7 +102,7 @@ jobs:
             - name: Terraform plan
               run: cd ${{ github.workspace }}/${{env.workdir}} && terraform plan
               env:
-                TOKEN: ${{ secrets.TOKEN }}
+                TF_VAR_TOKEN: ${{ secrets.TOKEN }}
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
                 ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
@@ -111,7 +112,7 @@ jobs:
             - name: Terraform apply 
               run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
               env:
-                TOKEN: ${{ secrets.TOKEN }}
+                TF_VAR_TOKEN: ${{ secrets.TOKEN }}
                 TF_VAR_public_key: "${{ secrets.public_key }}" 
                 ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
                 ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
