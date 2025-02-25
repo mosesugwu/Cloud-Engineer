@@ -20,7 +20,7 @@ locals {
         RUNNER_URL = "https://github.com/actions/runner/releases/download/v2.322.0/actions-runner-linux-x64-2.322.0.tar.gz"
         RUNNER_SHA = "b13b784808359f31bc79b08a191f5f83757852957dd8fe3dbfcc38202ccf5768"
         RUNNER_TAR = "./actions-runner-linux-x64-2.322.0.tar.gz"
-        TOKEN = var.TOKEN
+        TOKEN      = var.TOKEN
       }
     },
     vm-3 = {
