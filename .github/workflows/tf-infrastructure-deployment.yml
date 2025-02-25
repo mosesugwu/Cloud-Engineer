@@ -60,11 +60,11 @@ jobs:
               run: |
                 echo "PUBLIC_IP=$(curl -s https://ipinfo.io/ip)" >> $GITHUB_ENV
       
-            - name: Add NSG Rule
-              run: |
-                az network nsg rule create --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} \
-                  --name AllowGitHubActionsRunner --priority 300 --source-address-prefixes ${{ env.PUBLIC_IP }} \
-                  --destination-address-prefixes '*' --destination-port-ranges 8200 --direction Inbound --access Allow --protocol Tcp
+            # - name: Add NSG Rule
+            #   run: |
+            #     az network nsg rule create --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} \
+            #       --name AllowGitHubActionsRunner --priority 300 --source-address-prefixes ${{ env.PUBLIC_IP }} \
+            #       --destination-address-prefixes '*' --destination-port-ranges 8200 --direction Inbound --access Allow --protocol Tcp
 
             - name: Terraform init
               run: cd ${{ github.workspace }}/${{env.workdir}} && terraform init
@@ -119,7 +119,7 @@ jobs:
 
 
 
-                
+
 
 
 
