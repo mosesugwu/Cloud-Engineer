@@ -117,6 +117,9 @@ jobs:
                 az network nsg rule delete --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} --name AllowGitHubActionsRunner
 
 
+                
+
+
 
 
 
