@@ -67,3 +67,9 @@ variable "TOKEN" {
   type        = string
   description = "GitHub Personal Access Token"
 }
+
+variable "OWNER" {
+  description = "Owner of the repository"
+  type        = string
+  default     = "mosesugwu" 
+}
