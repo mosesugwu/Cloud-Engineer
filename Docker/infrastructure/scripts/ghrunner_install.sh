@@ -83,49 +83,68 @@
 exec > >(sudo tee -a /var/log/ghrunner_install.log) 2>&1
 set -x
 
-# Define the runner version
-RUNNER_VERSION="2.322.0"
+sudo apt -y update
 
-# Define other variables
+function install_packages() {
+    sudo apt install -y jq
+}
+install_packages
+
+# Declare variables
+RUNNER_VERSION="${RUNNER_VERSION}"
+RUNNER_URL="https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+RUNNER_SHA="${RUNNER_SHA}" # You need to provide the correct SHA for the specified version
+RUNNER_TAR="actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+TOKEN="${TOKEN}"
 OWNER="mosesugwu"
 REPO="Cloud-Engineer"
+USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
 RUNNER_DIR="/actions-runner"
 
-# Construct URLs and file names using the runner version
-RUNNER_URL="https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
-RUNNER_TAR="actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
-RUNNER_SHA_URL="https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz.sha256"
+# Debug: Print variables
+echo "RUNNER_URL: ${RUNNER_URL}"
+echo "RUNNER_SHA: ${RUNNER_SHA}"
+echo "RUNNER_TAR: ${RUNNER_TAR}"
+echo "TOKEN:      ${TOKEN}"
 
-# Update and install necessary packages
-sudo apt -y update
-sudo apt install -y jq curl
-
-# Create the runner directory
+# Create a folder and navigate into it
 mkdir -p "$RUNNER_DIR"
 cd "$RUNNER_DIR"
+echo $PWD
 
-# Download the runner tarball and its SHA256 checksum
-curl -o "$RUNNER_TAR" -L "$RUNNER_URL"
-curl -o "$RUNNER_TAR.sha256" -L "$RUNNER_SHA_URL"
+# Download the runner
+curl -o "${RUNNER_TAR}" -L "${RUNNER_URL}"
+echo "${RUNNER_SHA}  ${RUNNER_TAR}" | shasum -a 256 -c
+tar xzf "${RUNNER_TAR}"
 
-# Verify the downloaded tarball
-echo "$(cat ${RUNNER_TAR}.sha256)  ${RUNNER_TAR}" | shasum -a 256 -c
+# Obtain the runner token
+response=$(curl -s -L -X POST -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
+    https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token)
 
-# Extract the runner tarball
-tar xzf "$RUNNER_TAR"
+RUNNER_TOKEN=$(echo $response | jq -r '.token')
+echo "RUNNER_TOKEN: $RUNNER_TOKEN"
 
-# Obtain a registration token from GitHub
-TOKEN=$(curl -s -X POST -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer YOUR_GITHUB_PAT" \
-    "https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token" | jq -r '.token')
+# Run the configuration script with automated inputs
+echo "Running GitHub Actions runner configuration"
 
-# Configure the runner
-sudo -u "$USER" ./config.sh --url "https://github.com/$OWNER/$REPO" --token "$TOKEN" --name "ghrunner-vm02" --labels "self-hosted,Linux,X64,ghrunner-vm02" --work "_work"
+# Ensure all files and directories have correct ownership before configuration
+sudo chown -R $USER:$USER "$RUNNER_DIR"
 
-# Install and start the runner service
-sudo ./svc.sh install
-sudo ./svc.sh start
+# Run the configuration script as the user (not with sudo)
+sudo -u $USER bash <<EOF
+cd $RUNNER_DIR
+./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --work _work
+EOF
 
-# Check the status of the service
-sudo systemctl status "actions.runner.${OWNER}-${REPO}.service"
+# Install and start the service
+./svc.sh install
+./svc.sh start
+
+# Debug: List files to ensure correct ownership and presence of svc.sh
+ls -la
+
+# Check if the service is running
+sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
+
