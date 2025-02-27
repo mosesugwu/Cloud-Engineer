@@ -46,22 +46,12 @@ data "azurecaf_name" "vm_3" {
   separator     = "-"
 }
 
-# data "template_file" "custom_data" {
-#   for_each = local.virtual_machines
-#   template = file(each.value.custom_data)
-#   vars     = each.value.vars
-# }
-
 data "template_file" "custom_data" {
   for_each = local.virtual_machines
   template = file(each.value.custom_data)
-  vars = merge(
-    each.value.vars,
-    {
-      RUNNER_VERSION = var.RUNNER_VERSION
-    }
-  )
+  vars     = each.value.vars
 }
+
 
 
 

@@ -68,9 +68,4 @@ variable "TOKEN" {
   description = "GitHub Personal Access Token"
 }
 
-variable "RUNNER_VERSION" {
-  description = "The version of the GitHub Actions runner to install"
-  type        = string
-  default     = "2.322.0" // You can set your desired default version here
-}
 
