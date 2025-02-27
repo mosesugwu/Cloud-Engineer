@@ -51,6 +51,13 @@ data "template_file" "custom_data" {
   template = file(each.value.custom_data)
   vars     = each.value.vars
 }
+data "template_file" "custom_data" {
+  template = file("${path.module}/scripts/ghrunner_install.sh")
+  vars = {
+    OWNER = var.OWNER
+  }
+}
+
 
 # data "template_file" "custom_data" {
 #   for_each = local.virtual_machines
