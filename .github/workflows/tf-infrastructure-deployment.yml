@@ -19,10 +19,10 @@ env:
     ARM_CLIENT_ID: 49d663e0-c997-439d-b75f-bac184c474d8
     ARM_TENANT_ID: 062b4bc0-fa03-4ff6-898f-318d88f23127
     ARM_SUBSCRIPTION_ID: 3e58bbdc-9887-4d0f-af48-e47b110f81a5
-    RESOURCE_GROUP: "rg-ce-mosesugwu-01"
-    NSG_NAME: "nsg-ce-mosesugwu-dev-01"
-    TF_VAR_custom_data_vm_1: "${{ github.workspace }}/Docker/infrastructure/scripts/docker_install.sh"
-    TF_VAR_custom_data_vm_3: "${{ github.workspace }}/Docker/infrastructure/scripts/vault_install.sh"
+    # RESOURCE_GROUP: "rg-ce-mosesugwu-01"
+    # NSG_NAME: "nsg-ce-mosesugwu-dev-01"
+    # TF_VAR_custom_data_vm_1: "${{ github.workspace }}/Docker/infrastructure/scripts/docker_install.sh"
+    # TF_VAR_custom_data_vm_3: "${{ github.workspace }}/Docker/infrastructure/scripts/vault_install.sh"
     TF_VAR_custom_data_vm_2: "${{ github.workspace }}/Docker/infrastructure/scripts/ghrunner_install.sh"
 
 
@@ -56,10 +56,10 @@ jobs:
             - name: Azure CLI login
               run: az login --service-principal --username "${{ env.ARM_CLIENT_ID }}" --password "${{ env.ARM_CLIENT_SECRET }}" --tenant "${{ env.ARM_TENANT_ID }}"
 
-            - name: Get Runner IP
-              id: get_ip
-              run: |
-                echo "PUBLIC_IP=$(curl -s https://ipinfo.io/ip)" >> $GITHUB_ENV
+            # - name: Get Runner IP
+            #   id: get_ip
+            #   run: |
+            #     echo "PUBLIC_IP=$(curl -s https://ipinfo.io/ip)" >> $GITHUB_ENV
       
             # - name: Add NSG Rule
             #   run: |
@@ -92,11 +92,6 @@ jobs:
                 ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
-
-            - name: Debug TOKEN
-              run: echo "TOKEN is set"
-              env:
-                TOKEN: ${{ secrets.TOKEN }}
   
 
             - name: Terraform plan
@@ -119,15 +114,15 @@ jobs:
                 ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
-            - name: Remove NSG Rule
-              if: always()
-              run: |
-                az network nsg rule delete --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} --name AllowGitHubActionsRunner
+            # - name: Remove NSG Rule
+            #   if: always()
+            #   run: |
+            #     az network nsg rule delete --resource-group ${{ env.RESOURCE_GROUP }} --nsg-name ${{ env.NSG_NAME }} --name AllowGitHubActionsRunner
 
 
 
 
-                
+
 
 
 
