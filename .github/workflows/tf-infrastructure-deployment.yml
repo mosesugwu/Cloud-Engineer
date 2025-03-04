@@ -90,15 +90,15 @@ jobs:
                 ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
                 ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
-            # - name: Terraform apply 
-            #   run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
-            #   env:
-            #     TF_VAR_TOKEN: ${{ secrets.TOKEN }}
-            #     TF_VAR_public_key: "${{ secrets.public_key }}" 
-            #     ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
-            #     ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-            #     ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-            #     ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
+            - name: Terraform apply 
+              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
+              env:
+                TF_VAR_TOKEN: ${{ secrets.TOKEN }}
+                TF_VAR_public_key: "${{ secrets.public_key }}" 
+                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
+                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
 
 
