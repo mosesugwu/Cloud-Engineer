@@ -34,7 +34,7 @@ echo $PWD
 
 
 curl -o actions-runner-linux-x64-2.322.0.tar.gz -L "${RUNNER_URL}"
-echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
+echo "${RUNNER_SHA} actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
 tar xzf "${RUNNER_TAR}"
 
 curl -L -X POST -H "Accept: application/vnd.github+json" \
