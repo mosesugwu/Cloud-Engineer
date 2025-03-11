@@ -18,7 +18,7 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/actions-runner"
+RUNNER_DIR="$HOME/actions-runner"
 
 # Debug: Print variables
 echo "RUNNER_URL: ${RUNNER_URL}"
@@ -41,11 +41,6 @@ curl -L -X POST -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token > response.json 
 
-# curl -L \
-#   -H "Accept: application/vnd.github+json" \
-#   -H "Authorization: Bearer $(TOKEN)" \
-#   -H "X-GitHub-Api-Version: 2022-11-28" \
-#   https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token > response.json
 
 # Ensure response.json is owned by the current user
 sudo chown $USER:$USER response.json
