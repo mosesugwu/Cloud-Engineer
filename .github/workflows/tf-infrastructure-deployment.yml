@@ -26,7 +26,7 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on: ubuntu-latest #ghrunner-vm02 
+        runs-on: ghrunner-vm02 #ubuntu-latest 
         steps:
           - name: Git checkout
             uses: actions/checkout@v4
