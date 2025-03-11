@@ -64,8 +64,7 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 # Run the configuration script as the user (not with sudo)
 sudo -u mosesugwu bash <<EOF
 cd $RUNNER_DIR
-./config.sh --url https://github.com/<OWNER>/<REPO> --token <RUNNER_TOKEN> --name ghrunner-vm02-new
-# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
+./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
 # mosesugwu Default Runner Group
 # ghrunner-vm02
@@ -89,6 +88,8 @@ ls -la
 # sudo systemctl status actions.runner.$OWNER/$REPO/.ghrunner-vm02.service
 SYSTEMD_NAME=$(systemd-escape "actions.runner.$OWNER/$REPO/.ghrunner-vm02.service")
 sudo systemctl status $SYSTEMD_NAME
+
+
 
 
 
