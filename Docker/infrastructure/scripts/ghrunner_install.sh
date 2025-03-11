@@ -35,8 +35,6 @@ echo $PWD
 
 curl -o actions-runner-linux-x64-2.322.0.tar.gz -L "${RUNNER_URL}"
 echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
-# echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | tee checksum.txt
-# shasum -a 256 -c checksum.txt
 tar xzf "${RUNNER_TAR}"
 
 curl -L -X POST -H "Accept: application/vnd.github+json" \
@@ -83,11 +81,10 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 
 # Debug: List files to ensure correct ownership and presence of svc.sh
 ls -la
+sudo apt install -y zip
 
 # Check if the service is running
 sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
-# SYSTEMD_NAME=$(systemd-escape "actions.runner.$OWNER/$REPO/.ghrunner-vm02.service")
-# sudo systemctl status $SYSTEMD_NAME
 
 
 

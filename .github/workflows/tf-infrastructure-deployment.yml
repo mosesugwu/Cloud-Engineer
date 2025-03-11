@@ -26,79 +26,77 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on: ghrunner-vm02 #[self-hosted, linux, x64] 
-           
-
+        runs-on: ubuntu-latest 
         steps:
-            - name: Git checkout
-              uses: actions/checkout@v4
+          - name: Git checkout
+            uses: actions/checkout@v4
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
-              with:
-                node-version: '20'
+          - name: Install Node.js
+            uses: actions/setup-node@v4
+            with:
+              node-version: '20'
 
 
-            - name: Terraform install version
-              uses: hashicorp/setup-terraform@v3
-              with:
-                terraform_version: ${{ env.terraform-version}}
+          - name: Terraform install version
+            uses: hashicorp/setup-terraform@v3
+            with:
+              terraform_version: ${{ env.terraform-version}}
                 
-            - name: Install Azure CLI 
-              run: |
-                curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+          - name: Install Azure CLI 
+            run: |
+              curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-            - name: Azure CLI login
-              run: az login --service-principal --username "${{ env.ARM_CLIENT_ID }}" --password "${{ env.ARM_CLIENT_SECRET }}" --tenant "${{ env.ARM_TENANT_ID }}"
+          - name: Azure CLI login
+            run: az login --service-principal --username "${{ env.ARM_CLIENT_ID }}" --password "${{ env.ARM_CLIENT_SECRET }}" --tenant "${{ env.ARM_TENANT_ID }}"
 
 
 
-            - name: Terraform init
-              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform init
-              env:
-                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}" 
-                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
+          - name: Terraform init
+            run: cd ${{ github.workspace }}/${{env.workdir}} && terraform init
+            env:
+              ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}" 
+              ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+              ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+              ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
-            - name: Terraform fmt
-              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform fmt .
-              env:
-                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
-                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
+          - name: Terraform fmt
+            run: cd ${{ github.workspace }}/${{env.workdir}} && terraform fmt .
+            env:
+              ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
+              ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+              ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+              ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
-            - name: Terraform validate
-              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform validate
-              env:
-                TF_VAR_public_key: "${{ secrets.public_key }}"
-                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
-                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
+          - name: Terraform validate
+            run: cd ${{ github.workspace }}/${{env.workdir}} && terraform validate
+            env:
+              TF_VAR_public_key: "${{ secrets.public_key }}"
+              ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
+              ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+              ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+              ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}" 
 
   
 
-            - name: Terraform plan
-              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform plan
-              env:
-                TF_VAR_TOKEN: ${{ secrets.TOKEN }}
-                TF_VAR_public_key: "${{ secrets.public_key }}" 
-                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
-                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
+          - name: Terraform plan
+            run: cd ${{ github.workspace }}/${{env.workdir}} && terraform plan
+            env:
+              TF_VAR_TOKEN: ${{ secrets.TOKEN }}
+              TF_VAR_public_key: "${{ secrets.public_key }}" 
+              ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
+              ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+              ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+              ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
-            - name: Terraform apply 
-              run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
-              env:
-                TF_VAR_TOKEN: ${{ secrets.TOKEN }}
-                TF_VAR_public_key: "${{ secrets.public_key }}" 
-                ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
-                ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
-                ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
-                ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
+          - name: Terraform apply 
+            run: cd ${{ github.workspace }}/${{env.workdir}} && terraform apply -auto-approve
+            env:
+              TF_VAR_TOKEN: ${{ secrets.TOKEN }}
+              TF_VAR_public_key: "${{ secrets.public_key }}" 
+              ARM_CLIENT_SECRET: "${{ env.ARM_CLIENT_SECRET }}"
+              ARM_CLIENT_ID: "${{ env.ARM_CLIENT_ID}}"
+              ARM_TENANT_ID: "${{ env.ARM_TENANT_ID}}"
+              ARM_SUBSCRIPTION_ID: "${{ env.ARM_SUBSCRIPTION_ID }}"
 
 
 
