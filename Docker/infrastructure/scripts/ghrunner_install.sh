@@ -85,9 +85,9 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 ls -la
 
 # Check if the service is running
-# sudo systemctl status actions.runner.$OWNER/$REPO/.ghrunner-vm02.service
-SYSTEMD_NAME=$(systemd-escape "actions.runner.$OWNER/$REPO/.ghrunner-vm02.service")
-sudo systemctl status $SYSTEMD_NAME
+sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
+# SYSTEMD_NAME=$(systemd-escape "actions.runner.$OWNER/$REPO/.ghrunner-vm02.service")
+# sudo systemctl status $SYSTEMD_NAME
 
 
 
