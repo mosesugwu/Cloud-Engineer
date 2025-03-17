@@ -43,11 +43,12 @@ jobs:
             with:
               terraform_version: ${{ env.terraform-version}}
 
-          - name: Install Azure CLI 
+
+          - name: Install Azure CLI
             run: |
-              cd ~
-              curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-                
+              curl -sL https://aka.ms/InstallAzureCLIDeb -o install_azure_cli.sh
+              chmod +x install_azure_cli.sh
+              sudo bash install_azure_cli.sh
           # - name: Install Azure CLI 
           #   run: |
           #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
