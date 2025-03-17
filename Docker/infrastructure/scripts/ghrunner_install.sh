@@ -3,6 +3,7 @@ exec > >(sudo tee -a /var/log/ghrunner_install.log) 2>&1
 set -x
 
 sudo apt -y update
+sudo apt install -y zip
 
 function install_packages() {
     sudo apt install -y jq
@@ -18,7 +19,7 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/actions-runner"
+RUNNER_DIR="/home/mosesugwu/actions-runner"
 
 
 # Debug: Print variables
@@ -77,7 +78,6 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 
 # Debug: List files to ensure correct ownership and presence of svc.sh
 ls -la
-sudo apt install -y zip
 
 # Check if the service is running
 sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
