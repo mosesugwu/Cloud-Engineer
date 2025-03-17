@@ -18,7 +18,8 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/actions-runner"
+RUNNER_DIR="$HOME/actions-runner"
+RUNNER_TAR="actions-runner-linux-x64-2.322.0.tar.gz"
 
 # Debug: Print variables
 echo "RUNNER_URL: ${RUNNER_URL}"
@@ -57,6 +58,7 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 # Run the configuration script as the user (not with sudo)
 sudo -u mosesugwu bash <<EOF
 cd $RUNNER_DIR
+sudo chown -R $USER:$USER "$RUNNER_DIR"
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
 # mosesugwu Default Runner Group
