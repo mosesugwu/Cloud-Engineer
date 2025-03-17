@@ -26,7 +26,7 @@ env:
 
 jobs:
     Terraform-deployments:
-        runs-on: ghrunner-vm02 
+        runs-on: ubuntu-latest #ghrunner-vm02 
                   
         steps:
           - name: Git checkout
@@ -43,13 +43,10 @@ jobs:
             with:
               terraform_version: ${{ env.terraform-version}}
 
+
           - name: Install Azure CLI 
             run: |
-              sudo apt-get update && sudo apt-get install -y curl
               curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-          # - name: Install Azure CLI 
-          #   run: |
-          #     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
           - name: Azure CLI login
             run: az login --service-principal --username "${{ env.ARM_CLIENT_ID }}" --password "${{ env.ARM_CLIENT_SECRET }}" --tenant "${{ env.ARM_TENANT_ID }}"
