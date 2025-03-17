@@ -19,7 +19,7 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/home/mosesugwu/actions-runner"
+RUNNER_DIR="/actions-runner"
 
 
 # Debug: Print variables
