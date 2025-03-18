@@ -57,9 +57,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  lifecycle {
-    ignore_changes = [custom_data]
-  }
+  # lifecycle {
+  #   ignore_changes = [custom_data]
+  # }
 
 
 }
@@ -78,12 +78,12 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
-resource "azurerm_public_ip" "vm_1" {
-  name                = "vm1publicIP"
-  resource_group_name = module.resource_group.rg_name
-  location            = module.resource_group.rg_location
-  allocation_method   = "Static"
-}
+# resource "azurerm_public_ip" "vm_1" {
+#   name                = "vm1publicIP"
+#   resource_group_name = module.resource_group.rg_name
+#   location            = module.resource_group.rg_location
+#   allocation_method   = "Static"
+# }
 
 resource "azurerm_public_ip" "vm_2" {
   name                = "ghrunnerIP"
