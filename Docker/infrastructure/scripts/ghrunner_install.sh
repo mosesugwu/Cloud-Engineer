@@ -1,26 +1,108 @@
+# #!/bin/bash
+# exec > >(sudo tee -a /var/log/ghrunner_install.log) 2>&1
+# set -x
+
+# sudo apt -y update
+# sudo apt install -y zip
+
+# function install_packages() {
+#     sudo apt install -y jq
+# }
+# install_packages
+
+# # Declare variables
+# RUNNER_URL="${RUNNER_URL}"
+# RUNNER_SHA="${RUNNER_SHA}"
+# RUNNER_TAR="${RUNNER_TAR}"
+# GITHUB_PAT_TOKEN="${TOKEN}"
+# OWNER="mosesugwu"
+# REPO="Cloud-Engineer"
+# USER_HOME="/home/mosesugwu"
+# USER="mosesugwu"
+# RUNNER_DIR="$HOME/actions-runner/"
+
+
+# # Debug: Print variables
+# echo "RUNNER_URL: ${RUNNER_URL}"
+# echo "RUNNER_SHA: ${RUNNER_SHA}"
+# echo "RUNNER_TAR: ${RUNNER_TAR}"
+# echo "TOKEN: ${TOKEN}"
+
+
+# # Create a folder and navigate into it
+# mkdir -p "$HOME/actions-runner/"
+# cd "$HOME/actions-runner/"
+# echo $PWD
+
+
+# curl -o actions-runner-linux-x64-2.322.0.tar.gz -L "${RUNNER_URL}"
+# echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
+# tar xzf "${RUNNER_TAR}"
+
+# curl -L -X POST -H "Accept: application/vnd.github+json" \
+#     -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
+#     https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token > response.json 
+
+
+# # Ensure response.json is owned by the current user
+# sudo chown $USER:$USER response.json
+
+# RUNNER_TOKEN=$(jq -r '.token' response.json)
+# echo "RUNNER_TOKEN: $RUNNER_TOKEN"
+
+# # Run the configuration script with automated inputs
+# echo "Running GitHub Actions runner configuration"
+
+# # Ensure all files and directories have correct ownership before configuration
+# sudo chown -R $USER:$USER "$RUNNER_DIR"
+
+# # Run the configuration script as the user (not with sudo)
+# sudo -u mosesugwu bash <<EOF
+# cd $RUNNER_DIR
+# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
+# # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
+# # mosesugwu Default Runner Group
+# # ghrunner-vm02
+# # self-hosted,Linux,X64,ghrunner-vm02
+# # _work
+# # EOL
+# EOF
+
+# ./run.sh &
+
+# # Ensure correct ownership before installing the service
+# sudo chown -R $USER:$USER "$RUNNER_DIR"
+
+# ./svc.sh install
+# ./svc.sh start
+
+# # Debug: List files to ensure correct ownership and presence of svc.sh
+# ls -la
+
+# # Check if the service is running
+# sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
+
 #!/bin/bash
+
+# Log all output
 exec > >(sudo tee -a /var/log/ghrunner_install.log) 2>&1
-set -x
+set -x  # Enable debugging
 
+# Update system and install dependencies
 sudo apt -y update
-sudo apt install -y zip
-
-function install_packages() {
-    sudo apt install -y jq
-}
-install_packages
+sudo apt install -y zip jq
 
 # Declare variables
-RUNNER_URL="${RUNNER_URL}"
-RUNNER_SHA="${RUNNER_SHA}"
-RUNNER_TAR="${RUNNER_TAR}"
-GITHUB_PAT_TOKEN="${TOKEN}"
 OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="$HOME/actions-runner/"
+RUNNER_DIR="/home/mosesugwu/actions-runner"
 
+RUNNER_URL="https://github.com/actions/runner/releases/download/v2.322.0/actions-runner-linux-x64-2.322.0.tar.gz"
+RUNNER_SHA="b13b784808359f31bc79b08a191f5f83757852957dd8fe3dbfcc38202ccf5768"
+RUNNER_TAR="actions-runner-linux-x64-2.322.0.tar.gz"
+TOKEN="${TOKEN}"  # This should be passed securely
 
 # Debug: Print variables
 echo "RUNNER_URL: ${RUNNER_URL}"
@@ -28,60 +110,57 @@ echo "RUNNER_SHA: ${RUNNER_SHA}"
 echo "RUNNER_TAR: ${RUNNER_TAR}"
 echo "TOKEN: ${TOKEN}"
 
+# Create and navigate to the runner directory
+mkdir -p "$RUNNER_DIR"
+cd "$RUNNER_DIR" || { echo "Failed to enter $RUNNER_DIR"; exit 1; }
+echo "Current directory: $(pwd)"
 
-# Create a folder and navigate into it
-mkdir -p "$HOME/actions-runner/"
-cd "$HOME/actions-runner/"
-echo $PWD
-
-
-curl -o actions-runner-linux-x64-2.322.0.tar.gz -L "${RUNNER_URL}"
-echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
+# Download and verify runner package
+curl -o "$RUNNER_TAR" -L "${RUNNER_URL}"
+echo "${RUNNER_SHA}  ${RUNNER_TAR}" | shasum -a 256 -c
 tar xzf "${RUNNER_TAR}"
 
+# Get the registration token
 curl -L -X POST -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/$OWNER/$REPO/actions/runners/registration-token > response.json 
 
-
-# Ensure response.json is owned by the current user
+# Ensure response.json is owned by the user
 sudo chown $USER:$USER response.json
 
+# Extract the registration token
 RUNNER_TOKEN=$(jq -r '.token' response.json)
 echo "RUNNER_TOKEN: $RUNNER_TOKEN"
-
-# Run the configuration script with automated inputs
-echo "Running GitHub Actions runner configuration"
 
 # Ensure all files and directories have correct ownership before configuration
 sudo chown -R $USER:$USER "$RUNNER_DIR"
 
-# Run the configuration script as the user (not with sudo)
-sudo -u mosesugwu bash <<EOF
+# Configure the runner
+sudo -H -u mosesugwu bash -c "
 cd $RUNNER_DIR
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
-# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
-# mosesugwu Default Runner Group
-# ghrunner-vm02
-# self-hosted,Linux,X64,ghrunner-vm02
-# _work
-# EOL
-EOF
+"
 
+# Run the runner
 ./run.sh &
 
 # Ensure correct ownership before installing the service
 sudo chown -R $USER:$USER "$RUNNER_DIR"
 
-./svc.sh install
-./svc.sh start
-
-# Debug: List files to ensure correct ownership and presence of svc.sh
-ls -la
+# Install and start the service
+if [[ -f "./svc.sh" ]]; then
+    ./svc.sh install
+    ./svc.sh start
+else
+    echo "Error: svc.sh not found!"
+    exit 1
+fi
 
 # Check if the service is running
-sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
-
+systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service || {
+    echo "Runner service is not running. Restarting..."
+    systemctl restart actions.runner.$OWNER-$REPO.ghrunner-vm02.service
+}
 
 
 
