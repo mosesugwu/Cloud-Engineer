@@ -19,7 +19,7 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/actions-runner"
+RUNNER_DIR="$Home/actions-runner/"
 
 
 # Debug: Print variables
@@ -30,8 +30,8 @@ echo "TOKEN: ${TOKEN}"
 
 
 # Create a folder and navigate into it
-mkdir -p "$HOME/actions-runner"
-cd "$HOME/actions-runner"
+mkdir -p "$HOME/actions-runner/"
+cd "$HOME/actions-runner/"
 echo $PWD
 
 
@@ -59,13 +59,13 @@ sudo chown -R $USER:$USER "$RUNNER_DIR"
 # Run the configuration script as the user (not with sudo)
 sudo -u mosesugwu bash <<EOF
 cd $RUNNER_DIR
-#./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
-./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
-Default Runner Group
-ghrunner-vm02
-self-hosted,Linux,X64,ghrunner-vm02
-_work
-EOL
+./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
+# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
+# Mosesugwu Default Runner Group
+# ghrunner-vm02
+# self-hosted,Linux,X64,ghrunner-vm02
+# _work
+# EOL
 EOF
 
 ./run.sh &
