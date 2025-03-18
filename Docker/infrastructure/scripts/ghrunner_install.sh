@@ -19,7 +19,8 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="/actions-runner"
+RUNNER_DIR="/home/mosesugwu/actions-runner"
+#RUNNER_DIR="/actions-runner"
 
 
 # Debug: Print variables
@@ -37,7 +38,8 @@ echo $PWD
 
 curl -o actions-runner-linux-x64-2.322.0.tar.gz -L "${RUNNER_URL}"
 echo "${RUNNER_SHA}  actions-runner-linux-x64-2.322.0.tar.gz" | shasum -a 256 -c
-tar xzf "${RUNNER_TAR}"
+tar xzf actions-runner-linux-x64-2.322.0.tar.gz
+#tar xzf "${RUNNER_TAR}"
 
 curl -L -X POST -H "Accept: application/vnd.github+json" \
     -H "Authorization: Bearer ${TOKEN}" -H "X-GitHub-Api-Version: 2022-11-28" \
@@ -57,9 +59,13 @@ echo "Running GitHub Actions runner configuration"
 sudo chown -R $USER:$USER "$RUNNER_DIR"
 
 # Run the configuration script as the user (not with sudo)
-sudo -u mosesugwu bash <<EOF
-cd $RUNNER_DIR
+sudo -H -u mosesugwu bash -c "
+cd /home/mosesugwu/actions-runner
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
+"
+# sudo -u mosesugwu bash <<EOF
+# cd $RUNNER_DIR
+# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
 # mosesugwu Default Runner Group
 # ghrunner-vm02
