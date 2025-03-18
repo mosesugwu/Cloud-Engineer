@@ -61,7 +61,7 @@ sudo -u mosesugwu bash <<EOF
 cd $RUNNER_DIR
 #./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
-MosesUgwu Default Runner Group
+Default Runner Group
 ghrunner-vm02
 self-hosted,Linux,X64,ghrunner-vm02
 _work
