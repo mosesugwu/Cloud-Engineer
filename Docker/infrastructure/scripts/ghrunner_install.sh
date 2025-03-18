@@ -66,7 +66,7 @@ cd $RUNNER_DIR
 # self-hosted,Linux,X64,ghrunner-vm02
 # _work
 # EOL
-EOF
+#EOF
 
 ./run.sh &
 
