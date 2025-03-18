@@ -59,13 +59,9 @@ echo "Running GitHub Actions runner configuration"
 sudo chown -R $USER:$USER "$RUNNER_DIR"
 
 # Run the configuration script as the user (not with sudo)
-sudo -H -u mosesugwu bash -c "
-cd /home/mosesugwu/actions-runner
+sudo -u mosesugwu bash <<EOF
+cd $RUNNER_DIR
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
-"
-# sudo -u mosesugwu bash <<EOF
-# cd $RUNNER_DIR
-# ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
 # mosesugwu Default Runner Group
 # ghrunner-vm02
