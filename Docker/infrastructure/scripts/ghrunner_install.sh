@@ -19,7 +19,7 @@ OWNER="mosesugwu"
 REPO="Cloud-Engineer"
 USER_HOME="/home/mosesugwu"
 USER="mosesugwu"
-RUNNER_DIR="$Home/actions-runner/"
+RUNNER_DIR="$HOME/actions-runner/"
 
 
 # Debug: Print variables
@@ -61,12 +61,12 @@ sudo -u mosesugwu bash <<EOF
 cd $RUNNER_DIR
 ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN --name ghrunner-vm02 --labels self-hosted,Linux,X64,ghrunner-vm02 --runnergroup Default
 # ./config.sh --url https://github.com/$OWNER/$REPO --token $RUNNER_TOKEN <<EOL
-# Mosesugwu Default Runner Group
+# mosesugwu Default Runner Group
 # ghrunner-vm02
 # self-hosted,Linux,X64,ghrunner-vm02
 # _work
 # EOL
-#EOF
+EOF
 
 ./run.sh &
 
@@ -81,10 +81,6 @@ ls -la
 
 # Check if the service is running
 sudo systemctl status actions.runner.$OWNER-$REPO.ghrunner-vm02.service
-
-
-
-
 
 
 
