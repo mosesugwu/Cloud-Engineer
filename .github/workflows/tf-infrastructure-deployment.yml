@@ -43,9 +43,13 @@ jobs:
             with:
               terraform_version: ${{ env.terraform-version}}
 
+          - name: Change to Runner Directory
+            run: cd /home/mosesugwu && pwd
+
           - name: Install Azure CLI
             run: |
-              curl -sL https://aka.ms/InstallAzureCLIDeb | sudo /bin/bash
+              curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            working-directory: /home/mosesugwu
             
           # - name: Install Azure CLI 
           #   run: |
