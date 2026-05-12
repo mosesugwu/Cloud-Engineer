@@ -38,3 +38,34 @@ variable "nsg_name" {
 #   default     = {}
 
 # }
+
+variable "public_key" {
+  type = string
+
+}
+
+variable "private_key" {
+  type = string
+}
+
+# variable "custom_data_vm_1" {
+#   description = "Path to the custom data script for VM initialization"
+#   type        = string
+# }
+
+variable "custom_data_vm_2" {
+  description = "Path to the custom data script for VM initialization"
+  type        = string
+}
+
+# variable "custom_data_vm_3" {
+#   description = "Path to the custom data script for VM initialization"
+#   type        = string
+# }
+
+variable "TOKEN" {
+  type        = string
+  description = "GitHub Personal Access Token"
+}
+
+
